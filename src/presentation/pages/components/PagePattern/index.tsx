@@ -4,19 +4,19 @@ import { NavBar } from '../NavBar';
 import * as S from './style'
 
 interface PagePatternProps {
-    children: React.ReactNode
+    children: React.ReactNode;
+    isHighlight: boolean;
 }
 
 
 
 export const PagePattern: React.FC<PagePatternProps> = ({ children }) => {
     const { width } = useWindowSize();
-    console.log('wi', width)
 
     return (
         <S.MainContainer>
             <NavBar  width={width}/>
-            {children}
+            <S.ChildrenContainer isHighlight>{children}</S.ChildrenContainer>
             <S.Footer widthSize={width}>
                 <S.Text widthSize={width}>
                     Copyright &#169; 2021 Árvore. Todos os direitos reservados.
