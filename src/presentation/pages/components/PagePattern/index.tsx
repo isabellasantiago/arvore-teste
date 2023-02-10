@@ -5,7 +5,6 @@ import * as S from './style'
 
 interface PagePatternProps {
     children: React.ReactNode;
-    isHighlight: boolean;
 }
 
 
@@ -16,7 +15,7 @@ export const PagePattern: React.FC<PagePatternProps> = ({ children }) => {
     return (
         <S.MainContainer>
             <NavBar  width={width}/>
-            <S.ChildrenContainer isHighlight>{children}</S.ChildrenContainer>
+            <S.ChildrenContainer>{children}</S.ChildrenContainer>
             <S.Footer widthSize={width}>
                 <S.Text widthSize={width}>
                     Copyright &#169; 2021 Árvore. Todos os direitos reservados.

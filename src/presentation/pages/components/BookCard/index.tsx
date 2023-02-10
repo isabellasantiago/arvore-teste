@@ -3,8 +3,8 @@ import * as S from './style';
 
 
 interface BookCadProps {
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
     imgLink: string;
 }
 export const BookCard: React.FC<BookCadProps> = ({
@@ -13,10 +13,12 @@ export const BookCard: React.FC<BookCadProps> = ({
     imgLink
 }) => {
     return (
-        <S.ImgCard
-            src={imgLink}
-            width={width}
-            height={height}
-        />
+        <S.ImgContainer>
+            <S.ImgCard
+                src={imgLink}
+                width={width}
+                height={height}
+            />
+        </S.ImgContainer>
     )
 }

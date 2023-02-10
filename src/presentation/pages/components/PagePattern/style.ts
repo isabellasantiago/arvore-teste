@@ -9,11 +9,6 @@ interface BtnProps {
     width?: string;
 }
 
-interface ChildrenContainerProps {
-    isHighlight: boolean;
-}
-
-
 export const MainContainer = styled.main`
     box-sizing: border-box;
     
@@ -98,7 +93,7 @@ export const Button = styled.button<BtnProps>`
     
 `;
 
-export const ChildrenContainer = styled.div<ChildrenContainerProps>`
-    width: ${props => props.isHighlight ? '100%' : '70%'};
+export const ChildrenContainer = styled.div`
+    width: 100%;
     height: 100%;
 `;

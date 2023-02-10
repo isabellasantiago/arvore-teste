@@ -1,25 +1,66 @@
-import styled, { css } from 'styled-components';
+import React, { useRef, useEffect, useState } from 'react';
+import { BookCard } from '../BookCard';
+import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
+import * as S from './style';
+import { BooksModel } from '../../../../books.model';
 
-interface Props {
-    isHighlight?: boolean;
+interface BookShelvesProps {
+    widthSize: number;
+    books: Array<BooksModel>;
 }
 
+const link = 'https://marketplace.canva.com/EAE4oJOnMh0/1/0/1003w/canva-capa-de-livro-de-suspense-O7z4yw4a5k8.jpg'
 
-export const Container = styled.div<Props>`
-    box-sizing: border-box;
+export const BookShelves: React.FC<BookShelvesProps> = ({ widthSize, books }) => {
+    const carousel = useRef<HTMLDivElement>(null!);
+    console.log('books', books)
+    const images = books?.map((book) => {
+        const { volumeInfo } = book;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+        return volumeInfo.imageLinks.thumbnail;
+    })
 
-    width: 100%;
-    background: ${props => props.isHighlight ? '#DAF6F3' : 'none'};
-`;
+    const handleClikPrevious = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault();
+        carousel.current.scrollLeft -= carousel.current.offsetWidth
+        
+    }
+    const handleClikNext = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault();
+        carousel.current.scrollLeft += carousel.current.offsetWidth
+    }
 
-export const CategoryTitle = styled.h3<Props>`
-    font: 600 'Inter', sans-serif;
-    font-size: ${props => props.isHighlight ? '28px' : '16px'};
-    line-height: 100%;
-    color: ${props => props.isHighlight ? '#A977D8' : '#000'};
-`;
+
+    return (
+        <S.Container>
+            <S.CategoryTitle>Ação</S.CategoryTitle>
+            <S.BookList
+               ref={carousel}
+               widthSize={widthSize}
+            >
+                <S.Arrow 
+                    widthSize={widthSize}
+                    onClick={handleClikNext}
+                >
+                    {widthSize < 1599 ? null : <Arrow /> }
+                </S.Arrow>
+                <S.Arrow
+                    widthSize={widthSize}
+                    leftArrow
+                    onClick={handleClikPrevious}
+                >
+                    {widthSize < 1600 ? null : <Arrow style={{ transform: 'rotate(180deg)'}}/> }
+                </S.Arrow>
+                {images?.map((image) => {
+                    const index = Math.random();
+                    return(
+                        <BookCard
+                            imgLink={image}
+                            key={index}
+                        />   
+                    )
+                })}
+            </S.BookList>
+        </S.Container>
+    )
+}

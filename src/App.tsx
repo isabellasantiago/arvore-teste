@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { PagePattern } from './presentation/pages/components/PagePattern';
+import { MainPage } from './presentation/pages/MainPage';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <PagePattern />
+    <QueryClientProvider client={queryClient}>
+      <MainPage />
+    </QueryClientProvider>
   )
 }
 
