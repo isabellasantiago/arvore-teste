@@ -1,41 +1,35 @@
-import React, { createContext, useState, useMemo} from 'react';
-import { useQuery } from 'react-query';
-import { BooksModel } from '../books.model';
-import { fetchBooks } from '../fetchBooks';
+import React, { createContext, useState, useMemo, useContext} from 'react';
+
 
 interface ContextProps{
     children: React.ReactNode;
 }
 
 type FilterContext = {
-    searchQuery: string | null;
-    setSearchQuery: React.Dispatch<React.SetStateAction<string | null>>;
-    books: Array<BooksModel>;
-    initialBooks: Array<BooksModel>;
+    searchQuery: string;
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+    startIndex: number;
+    setStartIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const FilterContext = createContext<FilterContext>({
     searchQuery: '',
     setSearchQuery: () => {},
-    books: [],
-    initialBooks: [],
+    startIndex: 0,
+    setStartIndex: () => {},
 });
 
-//https://www.googleapis.com/books/v1/volumes?q=+subject:detach
 
 export const FilterContextProvider = ({children}: ContextProps) => {
-    const [searchQuery, setSearchQuery] = useState<string | null>('');
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [startIndex, setStartIndex]= useState<number>(0);
 
-    const { data } = useQuery('books', async () => await fetchBooks(`q=${searchQuery}`));
-    // const { data: initialCategoryBooks } = useQuery('booksByCategories', async () => await fetchBooks(``));
-    // console.log('items',initialCategoryBooks?.items)
-    const books = useMemo(() => data?.items, [searchQuery]);
-    const initialBooks = [] as Array<BooksModel>
     return (
-        <FilterContext.Provider value={{searchQuery, setSearchQuery, books, initialBooks}}>
+        <FilterContext.Provider value={{searchQuery, setSearchQuery, startIndex, setStartIndex }}>
             {children}
         </FilterContext.Provider>
     )
 }
 
-// export const filterContext = useContext(FilterContext)
+export const useFilter = () => useContext(FilterContext);
+

@@ -35,5 +35,4 @@ export interface BooksModel {
     volumeInfo: VolumeInfoType;
     accessInfo: AccessInfoType;
     saleInfo: SaleInfoType;
-
 }

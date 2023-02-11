@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { baseUrl, keyId } from './baseUrl';
+import { baseUrl } from './baseUrl';
 
 export const fetchBooks = async (query?: string) => {
-    const q = query ? query : 'q=react'
+    const queryString = query ? query : 'q=react'
     try{
-        const { data: response } = await axios.get(`${baseUrl}?${q}&startIndex=0&maxResults=10`)
+        const { data: response } = await axios.get(`${baseUrl}?${queryString}`)
         return response
     }catch(err) {
         console.log(err)

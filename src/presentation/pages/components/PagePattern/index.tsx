@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 import { NavBar } from '../NavBar';
 import * as S from './style'
 

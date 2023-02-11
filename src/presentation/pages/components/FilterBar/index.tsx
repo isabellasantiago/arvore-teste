@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { FilterContext } from '../../../../helpers/context/filterContext';
-import { fetchBooks } from '../../../../helpers/fetchBooks';
+import { useFilter } from '../../../../helpers/context/';
 import * as S from './style';
 
 
@@ -11,20 +10,22 @@ interface FilterBarProps {
 
 export const FilterBar: React.FC<FilterBarProps> = ({ widthSize}) => {
     const [search, setSearch] = useState('');
-    const filterContext = useContext(FilterContext);
-    const { searchQuery, setSearchQuery } = filterContext;
+    const { setSearchQuery, setStartIndex } = useFilter();
 
 
     const searchBook = (e: React.KeyboardEvent) => {
         if(e.key === 'Enter'){
-            console.log(search)
             setSearchQuery(search);
+            setStartIndex(0);
         }
     }
 
     const searchBookByClick = (e: React.MouseEvent) => {
-        
+        e.preventDefault();
+        setSearchQuery(search);
     }
+
+    console.log('search', search)
 
 
     return (
@@ -37,9 +38,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ widthSize}) => {
                     onChange={(e) => setSearch(e.target.value)}
                     onKeyPress={searchBook}
                 />
-                <SearchIcon sx={{ color: '#406A76'}}
-
-                />
+                <SearchIcon sx={{ color: '#406A76'}} onClick={searchBookByClick}/>
             </S.BarContainer>
         </>
     )
