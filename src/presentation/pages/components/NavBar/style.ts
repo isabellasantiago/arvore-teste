@@ -10,10 +10,11 @@ export const NavBar = styled.nav<Props>`
     display: flex;
     align-items: center;
 
-    ${props => props.widthSize > 742 ? css({
+    ${props => props.widthSize > 700 ? css({
         height: '70px',
         padding: '12px 26px',
         justifyContent: 'space-between',
+        maxWidth: '1680px',
     }) : css({
         padding: '12px 16px',
         justifyContent: 'space-between',
@@ -35,6 +36,7 @@ export const MobileContainer = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    margin-bottom: 10px;
 
     width: 100%;
 `;
@@ -43,6 +45,8 @@ export const NotficationIconArea = styled.div`
     position: relative;
     width: 23px;
     height: 20px;
+
+    cursor: pointer;
 `;
 
 export const Bubble = styled.div`

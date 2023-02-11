@@ -18,7 +18,7 @@ export const ProfilePic: React.FC<ProfilePicProps> = ({
 
     return(
         <S.Container widthSize={widthSize}>
-            <S.ProfilePic src={img ? img : imgBase}/>
+            <S.ProfilePic src={img ? img : imgBase} alt="imagem de perfil"/>
             {widthSize < 1600 ? null : (
             <S.NameContainer>
                 <S.Name>{name}</S.Name>

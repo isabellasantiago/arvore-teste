@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 
 interface Props {
-    width?: number;
-    height?: number;
+    width?: string | null;
+    height?: string | null;
 }
 
+
 export const ImgContainer = styled.div<Props>`
-    //desktop - w: 198 x h: 296
-    //tablet - w: 124px x h: 185
-    //mobile - w: 57px x h: 85
     width: ${props => props.width || '57px'};
     height: ${props => props.height || '85px'};
+
     flex: none;
+    padding: 1px;
+    cursor: pointer;
 `;
 
 export const ImgCard = styled.img`
@@ -19,4 +20,5 @@ export const ImgCard = styled.img`
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    background: rgba(178, 180, 185, 0.2);
 `;

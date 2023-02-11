@@ -16,16 +16,15 @@ export const MainContainer = styled.main`
     
     width: 100%;
     height: 100vh;
-    max-height: 100vh;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    gap: 5px 0 0 0;
 
+    background-color: #fff;
 `;
-
-
 
 export const Footer = styled.footer<Props>`
     box-sizing: border-box;
@@ -49,6 +48,8 @@ export const Footer = styled.footer<Props>`
         padding: '20px 30px',
         justifyContent: 'center',
     })}
+
+    background-color: #fff;
 
 `;
 
@@ -96,4 +97,10 @@ export const Button = styled.button<BtnProps>`
 export const ChildrenContainer = styled.div`
     width: 100%;
     height: 100%;
+
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar{
+        display: none;
+    }
 `;

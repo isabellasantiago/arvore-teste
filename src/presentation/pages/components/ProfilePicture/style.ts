@@ -19,6 +19,8 @@ export const Container = styled.div<ContainerProps>`
         justifyContent:"center",
         gap: "12px",
     })};
+
+    cursor: pointer;
 `;
 
 export const NameContainer = styled.div`

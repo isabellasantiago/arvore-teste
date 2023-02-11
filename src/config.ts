@@ -1,1 +1,0 @@
-export const baseUrl: string = 'https://www.googleapis.com/books/v1/volumes?q=Query&startIndex=0&maxResults=10'

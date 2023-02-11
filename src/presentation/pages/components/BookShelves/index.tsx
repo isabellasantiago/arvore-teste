@@ -2,65 +2,82 @@ import React, { useRef, useEffect, useState } from 'react';
 import { BookCard } from '../BookCard';
 import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import * as S from './style';
-import { BooksModel } from '../../../../books.model';
+import { BooksModel } from '../../../../helpers/books.model';
 
 interface BookShelvesProps {
     widthSize: number;
     books: Array<BooksModel>;
+    categoryTitle: string;
+    isHighlight?: boolean;
 }
 
-const link = 'https://marketplace.canva.com/EAE4oJOnMh0/1/0/1003w/canva-capa-de-livro-de-suspense-O7z4yw4a5k8.jpg'
-
-export const BookShelves: React.FC<BookShelvesProps> = ({ widthSize, books }) => {
+export const BookShelves: React.FC<BookShelvesProps> = ({ widthSize, books, categoryTitle, isHighlight }) => {
+    const [showLeft, setShowLeft] = useState(false);
+    const size = widthSize > 700 && widthSize < 1600 ? 'tablet' : widthSize > 1600 ? 'desktop' : 'mobile';
     const carousel = useRef<HTMLDivElement>(null!);
-    console.log('books', books)
     const images = books?.map((book) => {
-        const { volumeInfo } = book;
+        const { volumeInfo, id } = book;
 
-        return volumeInfo.imageLinks.thumbnail;
+        return { id , volumeInfo };
     })
+
+    console.log(widthSize > 1600 && isHighlight)
 
     const handleClikPrevious = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
         carousel.current.scrollLeft -= carousel.current.offsetWidth
-        
     }
+
     const handleClikNext = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
         carousel.current.scrollLeft += carousel.current.offsetWidth
+        setShowLeft(true);
     }
 
 
     return (
-        <S.Container>
-            <S.CategoryTitle>Ação</S.CategoryTitle>
-            <S.BookList
-               ref={carousel}
-               widthSize={widthSize}
+        <S.Container
+            widthSize={widthSize}
+            isHighlight={isHighlight}
+        >
+            <S.CategoryTitle
+             widthSize={widthSize}
+             isHighlight={isHighlight}
             >
-                <S.Arrow 
-                    widthSize={widthSize}
-                    onClick={handleClikNext}
+                {categoryTitle}
+            </S.CategoryTitle>
+                <S.BookList
+                   widthSize={widthSize}
                 >
-                    {widthSize < 1599 ? null : <Arrow /> }
-                </S.Arrow>
-                <S.Arrow
-                    widthSize={widthSize}
-                    leftArrow
-                    onClick={handleClikPrevious}
-                >
-                    {widthSize < 1600 ? null : <Arrow style={{ transform: 'rotate(180deg)'}}/> }
-                </S.Arrow>
-                {images?.map((image) => {
-                    const index = Math.random();
-                    return(
-                        <BookCard
-                            imgLink={image}
-                            key={index}
-                        />   
-                    )
-                })}
-            </S.BookList>
+                   <S.Arrow
+                       widthSize={widthSize}
+                       onClick={handleClikNext}
+                   >
+                       {widthSize < 1599 ? null : <Arrow /> }
+                   </S.Arrow>
+                   {showLeft && (
+                    <S.Arrow
+                        widthSize={widthSize}
+                        leftArrow
+                        onClick={handleClikPrevious}
+                    >
+                        {widthSize < 1600 ? null : <Arrow style={{ transform: 'rotate(180deg)'}}/> }
+                    </S.Arrow>
+                   )}
+                   <S.ContainerBooks ref={carousel}>
+                    {images?.map((image) => {
+                        const { volumeInfo, id } = image;
+                        const imgUrl = volumeInfo?.imageLinks?.thumbnail ? volumeInfo?.imageLinks?.thumbnail : volumeInfo?.imageLinks?.smallThumbnail
+                        return(
+                            <BookCard
+                                imgLink={imgUrl}
+                                key={id}
+                                widthType={size}
+                            />
+                        )
+                    })} 
+                   </S.ContainerBooks>
+                </S.BookList>
         </S.Container>
     )
 }

@@ -3,22 +3,27 @@ import * as S from './style';
 
 
 interface BookCadProps {
-    width?: number;
-    height?: number;
+    widthType?: "tablet" | "desktop" | "mobile";
     imgLink: string;
 }
 export const BookCard: React.FC<BookCadProps> = ({
-    width,
-    height,
+    widthType,
     imgLink
 }) => {
+    const size = widthType === 'tablet' ? {
+        width: '124px',
+        height: '185px'
+    } : widthType === 'desktop' ? {
+        width: '198px',
+        height: '296px'
+    } : undefined;
+
     return (
-        <S.ImgContainer>
-            <S.ImgCard
-                src={imgLink}
-                width={width}
-                height={height}
-            />
+        <S.ImgContainer
+            width={size?.width}
+            height={size?.height}
+        >
+            <S.ImgCard src={imgLink} />
         </S.ImgContainer>
     )
 }
