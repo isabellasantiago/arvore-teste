@@ -25,8 +25,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({ widthSize}) => {
         setSearchQuery(search);
     }
 
-    console.log('search', search)
-
 
     return (
         <>

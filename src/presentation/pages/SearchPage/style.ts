@@ -75,3 +75,8 @@ export const TitleOrAuthor = styled.span<TitleProps>`
         color: '#999999',
     })}
 `;
+
+export const SupportedDiv = styled.div`
+    background: none;
+    display: none;
+`;
