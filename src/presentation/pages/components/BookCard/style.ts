@@ -9,6 +9,7 @@ interface Props {
 
 
 export const ImgContainer = styled.div<Props>`
+    box-sizing: border-box;
     width: ${props => props.width || '57px'};
     height: ${props => props.height || '85px'};
 

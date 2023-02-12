@@ -8,24 +8,28 @@ interface ContextProps{
 type FilterContext = {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-    startIndex: number;
-    setStartIndex: React.Dispatch<React.SetStateAction<number>>;
+    hasFilter: boolean;
+    setHasFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FilterContext = createContext<FilterContext>({
     searchQuery: '',
     setSearchQuery: () => {},
-    startIndex: 0,
-    setStartIndex: () => {},
+    hasFilter: false,
+    setHasFilter: () => {},
 });
 
 
 export const FilterContextProvider = ({children}: ContextProps) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [startIndex, setStartIndex]= useState<number>(0);
+
+    console.log('searchQuery', searchQuery)
+
+    const [hasFilter, setHasFilter]= useState<boolean>(false);
+
 
     return (
-        <FilterContext.Provider value={{searchQuery, setSearchQuery, startIndex, setStartIndex }}>
+        <FilterContext.Provider value={{searchQuery, setSearchQuery, hasFilter, setHasFilter }}>
             {children}
         </FilterContext.Provider>
     )

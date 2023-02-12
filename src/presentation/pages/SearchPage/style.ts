@@ -4,17 +4,54 @@ interface TitleProps {
     type: 'title' | 'author';
 }
 
-export const Container = styled.div`
+interface Props {
+    widthSize: number;
+    isFilter?: boolean;
+}
+
+export const Container = styled.div<Props>`
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 8px 10%;
+    padding: 8px 5%;
 
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 27px;
+
+    ${props => props.widthSize > 450 && css({
+        flexDirection: 'row',
+        gap: '5px',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: '10px',
+    })}
+`;
+
+export const OthersTypeDiv = styled(Container)<Props>`
+    box-sizing: border-box;
+    height: 100%;
+    width: 745px;
+    display: flex;
+    flex-direction: column ;
+
+
+    ${props => props.widthSize > 700 && props.widthSize < 1600 && css({
+        maxWidth: '350px',
+    })}
+    ${props => props.widthSize > 1600 && css({
+        alignItems:'flex-start',
+        justifyContent:'flex-start',
+        width:'800px',
+    })}
+
+    ${props => props.isFilter && css({
+        width:'240px'
+    })}
+    
+    
 `;
 
 
@@ -24,6 +61,8 @@ export const SearchString = styled.span`
     
     font: 600 16px 'Inter', sans-serif;
     text-align: left;
+
+    white-space: nowrap;
 `;
 
 export const ButtonArea = styled.div`
@@ -37,7 +76,7 @@ export const ButtonArea = styled.div`
 
 `;
 
-export const BooksContaienr = styled.div`
+export const BooksContainer = styled.div<Props>`
     box-sizing: border-box;
     width: 100%;
 
@@ -45,16 +84,28 @@ export const BooksContaienr = styled.div`
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 8px;
 
     overflow-y: scroll;
 
     ::-webkit-scrollbar{
         display: none;
     }
+
+    ${props => props.widthSize > 700 && props.widthSize < 1600 && css({
+        height: '100%',
+        gap: '28px',
+        paddingTop: '23px',
+    })}
+
+    ${props => props.widthSize > 1600 && css({
+        alignItems: 'flex-start',
+        gap: '18px',
+        paddingTop: '33px',
+    })}
 `;
 
-export const BookCardArea = styled.div`
+export const BookCardArea = styled.div<Props>`
     box-sizing: border-box;
     width: 136px;
     height: 245px;
@@ -62,10 +113,16 @@ export const BookCardArea = styled.div`
     display: flex;
     flex-direction: column;
     gap: 7px;
+
+    ${props => props.widthSize > 700 && css({
+        gap: '5px',
+        marginBottom: '10px'
+    })}
 `;
 
 export const TitleOrAuthor = styled.span<TitleProps>`
     text-align: left;
+    white-space: wrap;
 
     ${props => props.type === 'title' ? css({
         font: '600 12px Inter',
@@ -76,7 +133,7 @@ export const TitleOrAuthor = styled.span<TitleProps>`
     })}
 `;
 
-export const SupportedDiv = styled.div`
-    background: none;
-    display: none;
+export const FilterArea = styled.div`
+    width: 308px;
+    background-color: #fff;
 `;

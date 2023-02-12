@@ -5,10 +5,6 @@ interface Props{
     textSize?: number;
 }
 
-interface BtnProps {
-    width?: string;
-}
-
 export const MainContainer = styled.main`
     box-sizing: border-box;
     
@@ -26,33 +22,6 @@ export const MainContainer = styled.main`
     background-color: #fff;
 `;
 
-export const Footer = styled.footer<Props>`
-    box-sizing: border-box;
-
-    width: 100%;
-    border-top: 0.5px solid rgba(217, 217, 217, 1);
-
-    display: flex;
-    align-items: center;
-
-    ${props => props.widthSize > 1679 ? css({
-        height: '100px',
-        justifyContent: 'space-evenly',
-    }) : props.widthSize > 742 ? css({
-        height: '82px',
-        padding: '12px 8px',
-        justifyContent: 'space-evenly',
-
-    }) : css({
-        height: '76px',
-        padding: '20px 30px',
-        justifyContent: 'center',
-    })}
-
-    background-color: #fff;
-
-`;
-
 export const Text = styled.span<Props>`
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -66,32 +35,6 @@ export const Text = styled.span<Props>`
     ${props => props.widthSize > 1648 ? css({
         whiteSpace: 'nowrap',
     }) : null}
-`;
-
-export const FooterRightContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-`;
-
-export const Button = styled.button<BtnProps>`
-    height: 40px;
-    padding: 12px 16px;
-    width: ${props => props.width || '206px'};
-
-    font: 500 16px 'Inter', sans-serif;
-    line-height: 16px;
-    color: #B2B4B9;
-    white-space: nowrap;
-
-    border: 1px solid rgba(178, 180, 185, 1);
-    border-radius: 8px;
-    background: none;
-
-    cursor: pointer;
-    
 `;
 
 export const ChildrenContainer = styled.div`

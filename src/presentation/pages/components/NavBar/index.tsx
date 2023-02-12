@@ -2,7 +2,7 @@ import React from "react";
 import { ProfilePic } from '../ProfilePicture';
 import { ReactComponent as Logo } from '../../../assets/Logo.svg';
 import { ReactComponent as NotificationIcon } from '../../../assets/notification-icon.svg';
-import { FilterBar } from '../FilterBar';
+import { SearchBar } from '../SearchBar';
 import * as S from './style'
 
 
@@ -29,7 +29,7 @@ export const NavBar: React.FC<NavProps> = ({ width }) => {
                             />
                         </S.NotificationContainer>
             </S.NavBar>
-            <FilterBar widthSize={width}/>
+            <SearchBar widthSize={width}/>
         </S.MobileContainer>
     )
 
@@ -39,7 +39,7 @@ export const NavBar: React.FC<NavProps> = ({ width }) => {
                         width={ width > 1600 ? '126px' : '111px'}
                         height={ width > 1600 ? '30px' : '24px'}
                     />
-                    <FilterBar widthSize={width}/>
+                    <SearchBar widthSize={width}/>
                     <S.NotificationContainer widthSize={width}>
                         {width < 1600 && (
                             <S.NotficationIconArea>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { MainPage } from './presentation/pages/MainPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { FilterContextProvider } from './helpers/context/filterContext';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { ButtonFilterEnum } from '../../../../common/enums/button-filter-type.enum';
 import { ReactComponent as FilterIcon } from '../../../assets/filter-icon.svg';
 import { ReactComponent as CloseIcon } from '../../../assets/close.svg';
@@ -8,17 +8,21 @@ interface ButtonProps {
     buttonType: 'filter' | 'cleanFilter';
     widthSize: number;
     isFilterNow?: boolean;
+    onClick: MouseEventHandler;
 }
 
 export const FilterButton: React.FC<ButtonProps> = ({
     widthSize,
     buttonType,
     isFilterNow,
+    onClick,
 }) => {
     const btnType = widthSize > 700 && widthSize < 1600 ? ButtonFilterEnum.CLEAN_FILTER_TABLET : widthSize > 1600 ? ButtonFilterEnum.CLEAN_FILTER_DESKTOP : undefined; 
     const filterButton = (
         <>
-            <S.FilterButton>
+            <S.FilterButton
+                onClick={onClick}
+            >
                 <FilterIcon />
                 {isFilterNow ? 'filtrar agora' : 'filtrar'}
             </S.FilterButton>
@@ -30,7 +34,7 @@ export const FilterButton: React.FC<ButtonProps> = ({
             <S.CleanFilterButton buttonType={btnType}>
                 limpar filtro
                 {widthSize > 700 && widthSize < 1600 ?
-                    <CloseIcon  width='8px' height='8px' /> : 
+                    <CloseIcon width='8px' height='8px' /> : 
                     <CloseIcon width='10px' height='10px' />}
             </S.CleanFilterButton>
         </>

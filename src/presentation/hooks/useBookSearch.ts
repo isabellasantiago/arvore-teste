@@ -1,25 +1,21 @@
 import axios from 'axios';
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import { baseUrl, BooksModel, fetchBooks} from '../../helpers';
+import { BooksModel, useFilter, baseUrl, fetchBooks} from '../../helpers';
 
-
-
-interface Props {
-    query: string | null;
-}
 
 interface DataProps {
     totalItems: number;
     items: Array<BooksModel>;
 }
 
-export const useBookSearch = (
-    {query}: Props) => 
-    {
-    const [start, setStart] = useState(0);
+export const useBookSearch = () => {
+    const { searchQuery: query } = useFilter();
+
     const getBooks = async ({pageParam = 0}) => {
+        console.log('caiu books')
         const { data: res } = await axios.get(`${baseUrl}?q=${query}&startIndex=${pageParam}&maxResults=10`);
+
         return res;
     };
 
@@ -27,14 +23,14 @@ export const useBookSearch = (
         'books',
         getBooks,
         {
-            getNextPageParam: (lastPage, allPages) => {
+            getNextPageParam: (lastPage) => {
                 const maxPages = lastPage.totalItems / 10;
-                const nextPage = allPages.length + 1;
+                const nextPage = lastPage?.items?.length + 1;
 
                return nextPage <= maxPages ? nextPage : undefined;
             }
-        }
-    )
+        },
+    );
 
 
     return { books: data?.pages, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage};
