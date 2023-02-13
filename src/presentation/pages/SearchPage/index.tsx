@@ -179,7 +179,6 @@ export const SearchPage: React.FC = () => {
         </S.Container>
 
     );
-    console.log('w', width)
 
     return(
         <PagePattern>

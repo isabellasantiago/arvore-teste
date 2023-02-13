@@ -67,10 +67,9 @@ const filterOptionsText = [
 ]
 
 export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) => {
-    const [checked, setChecked] = useState([]);
     const { width } = useWindowSize();
     const { checkFilters, handleCheckFilter, cleanFilter } = useFilter();
-    const delay = width < 650 ? 0.3 : 0;
+    const delay = width < 650 ? 0.2 : 0;
     const duration = width < 650 ? 1 : 0;
 
     const renderCheckboxList = filterOptionsText.map(({title, id, options}) => {
@@ -79,13 +78,12 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) =>
                 <S.Title titleType='filter'>{title}</S.Title>
                 {options.map(({text, value}) => {
                     const keyTyped = value as keyof FilterValues;
-                    console.log('keyTyped', keyTyped)
                     return(
                         <CheckboxButton
                             label={text}
                             value={value}
                             checked={checkFilters[keyTyped]}
-                            onChange={() => handleCheckFilter(value, checkFilters[keyTyped])}
+                            onChange={() => handleCheckFilter(value, !checkFilters[keyTyped])}
                         />
                     )
                 })}

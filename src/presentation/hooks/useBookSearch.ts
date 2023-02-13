@@ -20,7 +20,7 @@ export const useBookSearch = () => {
     };
 
     const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, refetch, isLoading, isFetching } = useInfiniteQuery(
-        'books',
+        ['books'],
         getBooks,
         {
             getNextPageParam: (lastPage, allPages) => {
@@ -38,9 +38,6 @@ export const useBookSearch = () => {
     useEffect(() => {
         query && refetch();
     }, [query]);
-
-    console.log('isLoading', isLoading);
-    console.log('isFetching', isFetching)
 
     return { books: data?.pages, isSuccess, isFetching, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage};
 }

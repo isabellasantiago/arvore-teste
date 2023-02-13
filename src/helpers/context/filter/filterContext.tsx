@@ -18,6 +18,8 @@ type FilterContext = {
     dataLength: number;
 }
 
+type FilterKeys = keyof FilterValues;
+
 const intialFilterValues = {
     maxPrice30: false,
     maxPrice50: false,
@@ -40,12 +42,12 @@ export const FilterContext = createContext<FilterContext>({
 });
 
 const filters = {
-    maxPrice30: ({ saleInfo: {listPrice: {amount}}}: BooksModel) => amount <= 30,
-    maxPrice50: ({ saleInfo: {listPrice: {amount}}}: BooksModel) => amount > 30 && amount < 51,
-    maxPrice100: ({ saleInfo: {listPrice: {amount}}}: BooksModel) => amount > 51 && amount < 101,
-    maxPriceMoreThan100: ({ saleInfo: {listPrice: {amount}}}: BooksModel) => amount > 100,
-    isAvailable: ({ saleInfo: { saleAbility}}: BooksModel) => saleAbility === 'FOR_SALE',
-    isUnavailable: ({ saleInfo: { saleAbility }}: BooksModel) => saleAbility === 'NOT_FOR_SALE',
+    maxPrice30: ({ saleInfo }: BooksModel) => saleInfo?.listPrice?.amount <= 30,
+    maxPrice50: ({ saleInfo }: BooksModel) => saleInfo?.listPrice?.amount > 30 && saleInfo?.listPrice?.amount < 51,
+    maxPrice100: ({ saleInfo }: BooksModel) => saleInfo?.listPrice?.amount > 51 && saleInfo?.listPrice?.amount < 101,
+    maxPriceMoreThan100: ({ saleInfo }: BooksModel) => saleInfo?.listPrice?.amount > 100,
+    isAvailable: ({ saleInfo }: BooksModel) => saleInfo?.saleability === 'FOR_SALE',
+    isUnavailable: ({ saleInfo }: BooksModel) => saleInfo?.saleability === 'NOT_FOR_SALE',
     epub: ({ accessInfo: { epub }}: BooksModel) => epub.isAvailable,
     pdf: ({ accessInfo: { pdf }}: BooksModel) => pdf.isAvailable,
 }
@@ -64,11 +66,14 @@ export const FilterContextProvider = ({children}: ContextProps) => {
     const dataLength = reduceValue(totalItems, 'totalItems') || 0;
 
     const filteredBookList = books?.filter(book => {
-        const keys = Object.keys(filters);
-        const values = Object.values(filters);
-        const keysCheckeds = keys.filter((_, index) => values[index]);
+        const keys = Object.keys(checkFilters);
+        const values = Object.values(checkFilters);
+        const keysCheckeds = keys.filter((_, index) => values[index]) as FilterKeys[];
+        
         if(keysCheckeds.length === 0) return true;
-    })
+
+        return keysCheckeds.some(key => filters[key](book));
+    });
 
     const cleanFilter = () => {
         setCheckFilter(prev => ({
@@ -77,6 +82,7 @@ export const FilterContextProvider = ({children}: ContextProps) => {
         }))
     }
     const handleCheckFilter = (value: string, checked: boolean) => {
+        console.log('check', value, checked)
         setCheckFilter(
             prev => ({
                 ...prev,
@@ -93,7 +99,7 @@ export const FilterContextProvider = ({children}: ContextProps) => {
                 checkFilters,
                 handleCheckFilter,
                 cleanFilter,
-                books,
+                books: filteredBookList,
                 dataLength,
             }}
         >
