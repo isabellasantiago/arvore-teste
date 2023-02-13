@@ -1,8 +1,8 @@
-<h1 align='center'>
-    <img src='src/presentation/asstes/Lovo.svg'/>        
+<h1 align="center">
+    <img src='src/presentation/assetes/Logo.svg'/>        
 </h1>
 
-<h1 align='center'>
+<h1 align="center">
     <img src='public/teste.gif'/>
 </h1>
 
