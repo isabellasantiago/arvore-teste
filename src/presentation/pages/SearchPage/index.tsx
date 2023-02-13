@@ -23,19 +23,14 @@ const override: CSSProperties = {
 export const SearchPage: React.FC = () => {
     const [showFilter, setShowFilter] = useState(false);
     const { width } = useWindowSize();
-    const { searchQuery } = useFilter();
+    const { searchQuery, books, dataLength } = useFilter();
     const {
-        books,
         isSuccess,
         fetchNextPage,
         hasNextPage = true,
         isLoading,
         isFetchingNextPage,
     } = useBookSearch();
-
-    const booksItems = books?.flatMap((page) => page?.items);
-    const totalItems = books?.flatMap(page => page?.totalItems);
-    const conditionTotalItems = totalItems ?  reduceValue(totalItems, 'totalItems') : 0;
 
     const onScrollBottom = useCallback(() => {
         fetchNextPage();
@@ -68,7 +63,7 @@ export const SearchPage: React.FC = () => {
                 widthSize={width}
             >
                 <S.SearchString>
-                        {`Resultados para "${searchQuery}":`}
+                    {`Resultados para "${searchQuery}":`}
                 </S.SearchString>
                 <S.ButtonArea>
                     <FilterButton
@@ -82,7 +77,7 @@ export const SearchPage: React.FC = () => {
                         id="scrollableDiv"
                     >
                         <InfiniteScroll
-                            dataLength={conditionTotalItems}
+                            dataLength={dataLength}
                             next={onScrollBottom}
                             hasMore={hasNextPage}
                             loader={infiniteLoader}
@@ -90,16 +85,16 @@ export const SearchPage: React.FC = () => {
                             scrollableTarget="scrollableDiv"
                             className='infinite-scroll'
                         >
-                        {booksItems !== undefined &&
-                            booksItems?.map((book) => {
-                                const { volumeInfo : {
+                        {books !== undefined &&
+                            books?.map((book) => {
+                                const { etag, volumeInfo : {
                                     authors,
                                     imageLinks,
                                     title
-                                }, id} = book;
+                                }} = book;
                                 return(
                                     <S.BookCardArea
-                                        key={id}
+                                        key={etag}
                                         widthSize={width}
                                     >
                                     <BookCard
@@ -148,7 +143,7 @@ export const SearchPage: React.FC = () => {
                         id='scrollableDiv'
                     >
                          <InfiniteScroll
-                            dataLength={conditionTotalItems}
+                            dataLength={dataLength}
                             next={onScrollBottom}
                             hasMore={hasNextPage}
                             loader={infiniteLoader}
@@ -157,7 +152,7 @@ export const SearchPage: React.FC = () => {
                             className='infinite-scroll'
                         >
                             {isSuccess &&
-                                booksItems?.map((book: BooksModel) => {
+                                books?.map((book: BooksModel) => {
                                     const { volumeInfo : {
                                         authors,
                                         imageLinks,
@@ -184,11 +179,11 @@ export const SearchPage: React.FC = () => {
         </S.Container>
 
     );
-
+    console.log('w', width)
 
     return(
         <PagePattern>
-            {isLoading ? loader : width < 450 ? mobile : others}
+            {isLoading ? loader : width < 650 ? mobile : others}
         </PagePattern>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { MainPage } from './presentation/pages/MainPage';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { FilterContextProvider } from './helpers/context/filterContext';
+import { FilterContextProvider } from './helpers/context/filter/filterContext';
 import { SearchPage } from './presentation/pages/SearchPage';
 
 const queryClient = new QueryClient();

@@ -27,11 +27,12 @@ type ListPriceType = {
 
 type SaleInfoType = {
     listPrice: ListPriceType;
-    saleability: "FOR_SALE" | "NOT_FOR_SALE";
+    saleAbility: "FOR_SALE" | "NOT_FOR_SALE";
 }
 
 export interface BooksModel {
     id: string;
+    etag: string;
     volumeInfo: VolumeInfoType;
     accessInfo: AccessInfoType;
     saleInfo: SaleInfoType;

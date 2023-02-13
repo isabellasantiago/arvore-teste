@@ -21,14 +21,13 @@ export const Container = styled.div<Props>`
     flex-direction: column;
     gap: 27px;
 
-    ${props => props.widthSize > 450 && css({
+    ${props => props.widthSize > 650 && css({
         flexDirection: 'row',
         gap: '5px',
         justifyContent: 'center',
         alignItems: 'flex-start',
         padding: '10px',
     })}
-
 `;
 
 export const OthersTypeDiv = styled(Container)<Props>`
@@ -95,7 +94,7 @@ export const BooksContainer = styled.div<Props>`
         }
 
         ${props => props.widthSize > 370  && props.widthSize < 700 && css({
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
         })}
 
         ${props => props.widthSize > 700 && props.widthSize < 1600 && css({

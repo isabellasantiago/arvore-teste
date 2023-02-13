@@ -22,7 +22,7 @@ export const Section = styled(motion.div)<Props>`
     flex-direction: column;
     gap: 20px;
 
-    ${ props => props.widthSize < 450 ? css({
+    ${ props => props.widthSize < 650 ? css({
         alignItems: 'flex-start',
         zIndex: 1,
         position: 'absolute',

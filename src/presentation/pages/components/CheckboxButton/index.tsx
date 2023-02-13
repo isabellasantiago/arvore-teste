@@ -1,37 +1,26 @@
 import React, { useState } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import * as S from './style';
+import { useFilter } from '../../../../helpers';
 
-type Value = {
-   text: string;
-   value: number | string;
-}
 interface Props {
    label: string;
-   value?: Value;
-   setValue?: any;
+   value: any;
+   checked?: boolean;
+   onChange: () => void;
 }
 
-export const CheckboxButton: React.FC<Props> = ({ label, value }) => {
+export const CheckboxButton: React.FC<Props> = ({ label, value, onChange }) => {
     const [checked, setChecked] = useState(false);
 
-    const handleCheck = (e?: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLDivElement, MouseEvent>, data?: any) => {
-         console.log('ss',data)
-         setChecked(!checked);
-    }
-
-    const handleInput = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-      console.log('value', e.target);
-    }
+    console.log('ch', checked)
 
    return (
       <S.CheckboxContainer
         checked={checked}
-        onClick={(e) => handleCheck(e)}
       >
-         <S.HiddenCheckbox 
-            value={value}
-            onChange={(e) => handleCheck(e, value)}
+         <S.HiddenCheckbox
+            onChange={onChange}
             checked={checked}
          />
          <S.StyledCheckbox
