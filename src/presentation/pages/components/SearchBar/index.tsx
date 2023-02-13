@@ -32,7 +32,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ widthSize}) => {
                     type="search"
                     placeholder='Search'
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                        console.log('value', e.target.value)
+                        setSearch(e.target.value)}}
                     onKeyPress={searchBook}
                 />
                 <SearchIcon sx={{ color: '#406A76'}} onClick={searchBookByClick}/>

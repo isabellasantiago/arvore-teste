@@ -44,7 +44,7 @@ export const SearchPage: React.FC = () => {
             </S.ButtonArea>
                 <S.BooksContainer
                     widthSize={width}>
-                    {isSuccess &&                    
+                    {booksItems !== undefined &&                    
                         booksItems?.map((book, index) => {
                             const { volumeInfo : {
                                 authors,

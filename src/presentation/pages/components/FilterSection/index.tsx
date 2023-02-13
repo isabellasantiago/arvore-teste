@@ -87,7 +87,7 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter }) => {
                         <S.Title titleType='filter'>{title}</S.Title>
                         {options.map((opt) => {
                             return(
-                                <CheckboxButton label={opt.text}/>
+                                <CheckboxButton label={opt.text} key={opt.text}/>
                             )
                         })}
                     </S.FilterContainer>
