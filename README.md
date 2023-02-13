@@ -2,7 +2,7 @@
     <img src='src/presentation/asstes/Lovo.svg'/>        
 </h1>
 
-<h1>
+<h1 align='center'>
     <img src='public/teste.gif'/>
 </h1>
 
