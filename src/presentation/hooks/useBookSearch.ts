@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import {  useEffect, useCallback } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import { BooksModel, useFilter, baseUrl, fetchBooks} from '../../helpers';
+import { BooksModel, useFilter, baseUrl} from '../../helpers';
+import { reduceValue } from '../../helpers/factory/reduced';
 
 
 interface DataProps {
@@ -10,13 +11,11 @@ interface DataProps {
 }
 
 export const useBookSearch = () => {
+
     const { searchQuery: query } = useFilter();
 
     const getBooks = useCallback(async ({pageParam = 0}) => {
-        console.log('getBooks')
         const { data: res } = await axios.get(`${baseUrl}?q=${query}&startIndex=${pageParam}&maxResults=10`);
-
-        refetch();
         return res;
     }, [query]);
 
@@ -24,20 +23,21 @@ export const useBookSearch = () => {
         'books',
         getBooks,
         {
-            getNextPageParam: (lastPage) => {
-                const maxPages = lastPage.totalItems / 10;
-                const nextPage = lastPage?.items?.length + 1;
-
-               return nextPage <= maxPages ? nextPage : undefined;
+            getNextPageParam: (lastPage, allPages) => {
+                const maxPages = lastPage?.totalItems / 10;
+                const nextPage = reduceValue(allPages) + 1;
+    
+                const result = nextPage <= maxPages ? nextPage : undefined;
+    
+               return result;
             },
-            enabled: false,
+            enabled: !!query,
         }, 
     );
 
     useEffect(() => {
         query && refetch();
     }, [query]);
-
 
     return { books: data?.pages, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage};
 }

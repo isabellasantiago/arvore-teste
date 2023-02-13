@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useFilter } from '../../../../helpers/context';
 import * as S from './style';
@@ -32,9 +32,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ widthSize}) => {
                     type="search"
                     placeholder='Search'
                     value={search}
-                    onChange={(e) => {
-                        console.log('value', e.target.value)
-                        setSearch(e.target.value)}}
+                    onChange={(e) => setSearch(e.target.value)}
                     onKeyPress={searchBook}
                 />
                 <SearchIcon sx={{ color: '#406A76'}} onClick={searchBookByClick}/>

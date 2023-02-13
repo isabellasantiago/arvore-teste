@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BookCard } from '../BookCard';
 import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import * as S from './style';
@@ -20,8 +20,6 @@ export const BookShelves: React.FC<BookShelvesProps> = ({ widthSize, books, cate
 
         return { id , volumeInfo };
     })
-
-    console.log(widthSize > 1600 && isHighlight)
 
     const handleClikPrevious = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();

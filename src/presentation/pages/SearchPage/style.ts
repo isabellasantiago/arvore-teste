@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 interface TitleProps {
     type: 'title' | 'author';
