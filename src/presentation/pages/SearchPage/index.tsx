@@ -1,6 +1,7 @@
 import React, { CSSProperties, useCallback, useState } from 'react';
 import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import BeatLoader from 'react-spinners/BeatLoader';
 import { useFilter } from '../../../helpers/context';
 import { reduceValue } from '../../../helpers/factory';
 import { BooksModel } from '../../../helpers';
@@ -23,7 +24,14 @@ export const SearchPage: React.FC = () => {
     const [showFilter, setShowFilter] = useState(false);
     const { width } = useWindowSize();
     const { searchQuery } = useFilter();
-    const { books, isSuccess, fetchNextPage, hasNextPage = true, isLoading } = useBookSearch();
+    const {
+        books,
+        isSuccess,
+        fetchNextPage,
+        hasNextPage = true,
+        isLoading,
+        isFetchingNextPage,
+    } = useBookSearch();
 
     const booksItems = books?.flatMap((page) => page?.items);
     const totalItems = books?.flatMap(page => page?.totalItems);
@@ -38,6 +46,17 @@ export const SearchPage: React.FC = () => {
             color='#9EAEB7'
             loading={isLoading}
             size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            cssOverride={override}
+        />
+    )
+
+    const infiniteLoader = (
+        <BeatLoader 
+            color='#536067'
+            loading={isFetchingNextPage}
+            size={10}
             aria-label="Loading Spinner"
             data-testid="loader"
             cssOverride={override}
@@ -66,7 +85,7 @@ export const SearchPage: React.FC = () => {
                             dataLength={conditionTotalItems}
                             next={onScrollBottom}
                             hasMore={hasNextPage}
-                            loader={loader}
+                            loader={infiniteLoader}
                             endMessage={<p>That's all folks!</p>}
                             scrollableTarget="scrollableDiv"
                             className='infinite-scroll'
@@ -132,7 +151,7 @@ export const SearchPage: React.FC = () => {
                             dataLength={conditionTotalItems}
                             next={onScrollBottom}
                             hasMore={hasNextPage}
-                            loader={loader}
+                            loader={infiniteLoader}
                             endMessage={<p>That's all folks!</p>}
                             scrollableTarget="scrollableDiv"
                             className='infinite-scroll'

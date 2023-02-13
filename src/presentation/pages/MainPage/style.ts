@@ -14,4 +14,5 @@ export const MainContainer = styled.div<Props>`
     align-items: flex-start;
     justify-content: center;
     gap: ${props => props.widthSize < 500 ? '5px' : '15px'};
+    padding-top:  ${props => props.widthSize < 500 && '28px'};
 `;

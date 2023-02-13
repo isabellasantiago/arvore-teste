@@ -14,12 +14,12 @@ export const useBookSearch = () => {
 
     const { searchQuery: query } = useFilter();
 
-    const getBooks = useCallback(async ({pageParam = 0}) => {
+    const getBooks = async ({pageParam = 0}) => {
         const { data: res } = await axios.get(`${baseUrl}?q=${query}&startIndex=${pageParam}&maxResults=10`);
         return res;
-    }, [query]);
+    };
 
-    const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, refetch, isLoading } = useInfiniteQuery(
+    const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, refetch, isLoading, isFetching } = useInfiniteQuery(
         'books',
         getBooks,
         {
@@ -39,5 +39,8 @@ export const useBookSearch = () => {
         query && refetch();
     }, [query]);
 
-    return { books: data?.pages, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, isLoading};
+    console.log('isLoading', isLoading);
+    console.log('isFetching', isFetching)
+
+    return { books: data?.pages, isSuccess, isFetching, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage};
 }
