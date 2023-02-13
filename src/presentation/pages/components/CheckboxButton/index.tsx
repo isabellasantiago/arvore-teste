@@ -2,25 +2,36 @@ import React, { useState } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import * as S from './style';
 
+type Value = {
+   text: string;
+   value: number | string;
+}
 interface Props {
-    label: string;
-    value?: any;
+   label: string;
+   value?: Value;
+   setValue?: any;
 }
 
-export const CheckboxButton: React.FC<Props> = ({ label }) => {
+export const CheckboxButton: React.FC<Props> = ({ label, value }) => {
     const [checked, setChecked] = useState(false);
 
-    const handleCheck = () => {
-        setChecked(!checked);
+    const handleCheck = (e?: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLDivElement, MouseEvent>, data?: any) => {
+         console.log('ss',data)
+         setChecked(!checked);
+    }
+
+    const handleInput = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+      console.log('value', e.target);
     }
 
    return (
       <S.CheckboxContainer
         checked={checked}
-        onClick={handleCheck}
+        onClick={(e) => handleCheck(e)}
       >
          <S.HiddenCheckbox 
-            onChange={handleCheck}
+            value={value}
+            onChange={(e) => handleCheck(e, value)}
             checked={checked}
          />
          <S.StyledCheckbox

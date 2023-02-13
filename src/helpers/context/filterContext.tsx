@@ -27,7 +27,14 @@ export const FilterContextProvider = ({children}: ContextProps) => {
 
 
     return (
-        <FilterContext.Provider value={{searchQuery, setSearchQuery, hasFilter, setHasFilter }}>
+        <FilterContext.Provider
+            value={{
+                searchQuery,
+                setSearchQuery,
+                hasFilter,
+                setHasFilter
+            }}
+        >
             {children}
         </FilterContext.Provider>
     )

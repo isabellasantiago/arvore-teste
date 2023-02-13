@@ -98,21 +98,21 @@ export const SearchPage: React.FC = () => {
                                     title
                                 }, id} = book;
                                 return(
-                                    
                                     <S.BookCardArea
                                         key={id}
                                         widthSize={width}
                                     >
-                                        <BookCard
-                                            imgLink={imageLinks ? imageLinks.thumbnail : ''}
-                                            widthType='tablet'
-                                            hasShadow
-                                            borderRadius='6px 12px 12px 6px'
-                                        />
-                                        <S.TitleOrAuthor type='title'>{title ?? '-'}</S.TitleOrAuthor>
-                                        <S.TitleOrAuthor type='author'>{authors ?? '-'}</S.TitleOrAuthor>
-                                    </S.BookCardArea>
-                        )})}
+                                    <BookCard
+                                        imgLink={imageLinks ? imageLinks.thumbnail : ''}
+                                        widthType='tablet'
+                                        hasShadow
+                                        borderRadius='6px 12px 12px 6px'
+                                    />
+                                    <S.TitleOrAuthor type='title'>{title ?? '-'}</S.TitleOrAuthor>
+                                    <S.TitleOrAuthor type='author'>{authors ?? '-'}</S.TitleOrAuthor>
+                                    </S.BookCardArea>    
+                                )
+                        })}
                         </InfiniteScroll>
                     </S.BooksContainer>
                 {showFilter && (

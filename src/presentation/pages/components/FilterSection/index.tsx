@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {ReactComponent as CloseIcon } from '../../../assets/close.svg';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import { CheckboxButton, FilterButton, Footer } from '../';
@@ -45,9 +45,11 @@ const filterTypes = [
         options: [
             {
                 text: 'e-pub',
+                value: 'e-pub'
             },
             {
                 text: 'PDF',
+                value: 'pdf'
             }
         ]
     }
@@ -59,6 +61,7 @@ interface Props {
 }
 
 export const FilterSection: React.FC<Props> = ({ setShowFilter }) => {
+    const [optValue, setOptValue] = useState();
     const { width } = useWindowSize();
     const delay = width < 450 ? 0.3 : 0;
     const duration = width < 450 ? 1 : 0;
@@ -86,7 +89,10 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter }) => {
                         <S.Title titleType='filter'>{title}</S.Title>
                         {options.map((opt) => {
                             return(
-                                <CheckboxButton label={opt.text} key={opt.text}/>
+                                <CheckboxButton
+                                    label={opt.text}
+                                    
+                                />
                             )
                         })}
                     </S.FilterContainer>
