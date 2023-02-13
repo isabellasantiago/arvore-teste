@@ -3,7 +3,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useFilter } from '../../../helpers/context';
-import { reduceValue } from '../../../helpers/factory';
 import { BooksModel } from '../../../helpers';
 import {
     FilterSection,
@@ -22,8 +21,9 @@ const override: CSSProperties = {
 
 export const SearchPage: React.FC = () => {
     const [showFilter, setShowFilter] = useState(false);
+    const [showCleanBtn, setShowCleanBtn] = useState(false);
     const { width } = useWindowSize();
-    const { searchQuery, books, dataLength } = useFilter();
+    const { searchQuery, books, dataLength, cleanFilter } = useFilter();
     const {
         isSuccess,
         fetchNextPage,
@@ -35,6 +35,11 @@ export const SearchPage: React.FC = () => {
     const onScrollBottom = useCallback(() => {
         fetchNextPage();
     }, [JSON.stringify(books)]);
+
+    const handleClickCleanBtn = () => {
+        cleanFilter();
+        setShowCleanBtn(false);
+    }
 
     const loader = (
         <ClipLoader
@@ -67,10 +72,19 @@ export const SearchPage: React.FC = () => {
                 </S.SearchString>
                 <S.ButtonArea>
                     <FilterButton
+                        setShowCleanBtn={setShowCleanBtn}
                         onClick={() => setShowFilter(true)}
                         widthSize={width}
                         buttonType='filter'
                     />
+                    {showCleanBtn &&(
+                        <FilterButton
+                            setShowCleanBtn={setShowCleanBtn}
+                            buttonType='cleanFilter'
+                            widthSize={width} 
+                            onClick={() => handleClickCleanBtn()}
+                        />
+                    )}
                 </S.ButtonArea>
                     <S.BooksContainer
                         widthSize={width}
@@ -112,8 +126,10 @@ export const SearchPage: React.FC = () => {
                     </S.BooksContainer>
                 {showFilter && (
                     <FilterSection
-                    setShowFilter={setShowFilter}
-                    showFilter={showFilter}
+                        showCleanBtn={showCleanBtn}
+                        setShowFilter={setShowFilter}
+                        showFilter={showFilter}
+                        setShowCleanBtn={setShowCleanBtn}
                     />
                 )}
             </S.Container>
@@ -128,8 +144,10 @@ export const SearchPage: React.FC = () => {
                 isFilter
             >
                 <FilterSection
+                    showCleanBtn={showCleanBtn}
                     setShowFilter={setShowFilter}
                     showFilter={showFilter}
+                    setShowCleanBtn={setShowCleanBtn}
                 />
             </S.OthersTypeDiv>
             <S.OthersTypeDiv

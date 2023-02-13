@@ -33,7 +33,7 @@ export const CleanFilterButton = styled(FilterButton)`
             gap:'29px',
             width: '136px',
             height: '30px'
-        }) : css({
+        }) : props.buttonType === ButtonFilterEnum.CLEAN_FILTER_TABLET && css({
             fontSize: '12px',
             gap:'12px',
             width: '136px',

@@ -10,7 +10,9 @@ import * as S from './style';
 
 interface Props {
     showFilter: boolean;
+    showCleanBtn: boolean;
     setShowFilter: React.Dispatch<React.SetStateAction<boolean>>
+    setShowCleanBtn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const filterOptionsText = [
@@ -66,11 +68,16 @@ const filterOptionsText = [
     }
 ]
 
-export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) => {
+export const FilterSection: React.FC<Props> = ({ setShowFilter, showCleanBtn,  setShowCleanBtn }) => {
     const { width } = useWindowSize();
     const { checkFilters, handleCheckFilter, cleanFilter } = useFilter();
     const delay = width < 650 ? 0.2 : 0;
     const duration = width < 650 ? 1 : 0;
+
+    const handleClickFilters = (value: string, checked: boolean) => {
+        handleCheckFilter(value, checked)
+        setShowCleanBtn(true);
+    }
 
     const renderCheckboxList = filterOptionsText.map(({title, id, options}) => {
         return(
@@ -80,10 +87,11 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) =>
                     const keyTyped = value as keyof FilterValues;
                     return(
                         <CheckboxButton
+                            key={value}
                             label={text}
                             value={value}
                             checked={checkFilters[keyTyped]}
-                            onChange={() => handleCheckFilter(value, !checkFilters[keyTyped])}
+                            onChange={() => handleClickFilters(value, !checkFilters[keyTyped])}
                         />
                     )
                 })}
@@ -91,35 +99,54 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) =>
         )
     })
 
+    const handleClick = () => {
+        setShowCleanBtn(true)
+        setShowFilter(false)
+    }
+
+    const handleCleanClick = () => {
+        setShowCleanBtn(false);
+        cleanFilter();
+    }
+
     return (
-        <>
-        {showFilter && (
             <S.Section
                 initial={{ x: -1900}}
                 animate={{ x: 0 }}
                 transition={{ delay, duration }}
                 widthSize={width}
             >
-                <S.Header>
-                    <S.Title titleType='header'>Filtrar</S.Title>
-                    {width < 450 ? (
-                    <CloseIcon
-                        width='9px'
-                        height='9px'
-                        style={{ backgroundColor: '#fff', cursor: 'pointer' }}
-                        onClick={() => setShowFilter(false)}
-                    />
-                    ) : null}
-                </S.Header>
+                <S.HeaderArea>
+                    <S.Header>
+                        <S.Title titleType='header'>Filtrar</S.Title>
+                        {width < 450 ? (
+                        <CloseIcon
+                            width='9px'
+                            height='9px'
+                            style={{ backgroundColor: '#fff', cursor: 'pointer' }}
+                            onClick={() => setShowFilter(false)}
+                        />
+                        ) : null}
+                    </S.Header>
+                    {showCleanBtn && (
+                        <FilterButton
+                            setShowCleanBtn={setShowCleanBtn}                           
+                            buttonType='cleanFilter'
+                            widthSize={width}
+                            onClick={handleCleanClick}
+                        />
+                    )}
+                </S.HeaderArea>
                 {renderCheckboxList}
                 {width < 650 && (
                     <>
                         <S.BtnArea>
-                            <FilterButton 
+                            <FilterButton
+                                setShowCleanBtn={setShowCleanBtn} 
                                 buttonType='filter'
                                 widthSize={width}
                                 isFilterNow
-                                onClick={() => setShowFilter(false)}
+                                onClick={handleClick}
                             />
                         </S.BtnArea>
                         <Footer 
@@ -128,7 +155,5 @@ export const FilterSection: React.FC<Props> = ({ setShowFilter, showFilter }) =>
                     </>
                 )}
             </S.Section>
-        )}
-        </>
     )
 }

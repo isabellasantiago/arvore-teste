@@ -45,6 +45,16 @@ export const Header = styled.div`
 
 `;
 
+export const HeaderArea = styled.div`
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`;
+
 export const Title = styled.span<TitleProps>`
     font-weight: 600;
     font-family: 'Inter';
@@ -66,5 +76,5 @@ export const BtnArea = styled.div`
     width: 100%;
     display: flex;
     align-items: flex-end;
-    margin-top: 172px;
+    margin-top: 132px;
 `;

@@ -9,6 +9,7 @@ interface ButtonProps {
     widthSize: number;
     isFilterNow?: boolean;
     onClick: MouseEventHandler;
+    setShowCleanBtn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const FilterButton: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ export const FilterButton: React.FC<ButtonProps> = ({
     buttonType,
     isFilterNow,
     onClick,
+    setShowCleanBtn
 }) => {
     const btnType = widthSize > 700 && widthSize < 1600 ? ButtonFilterEnum.CLEAN_FILTER_TABLET : widthSize > 1600 ? ButtonFilterEnum.CLEAN_FILTER_DESKTOP : undefined; 
     const filterButton = (
@@ -34,8 +36,10 @@ export const FilterButton: React.FC<ButtonProps> = ({
             <S.CleanFilterButton buttonType={btnType}>
                 limpar filtro
                 {widthSize > 700 && widthSize < 1600 ?
-                    <CloseIcon width='8px' height='8px' /> : 
-                    <CloseIcon width='10px' height='10px' />}
+                    <CloseIcon width='8px' height='8px' onClick={() => setShowCleanBtn(false)}/> :
+                    widthSize > 1600 && 
+                    <CloseIcon width='10px' height='10px' onClick={() => setShowCleanBtn(false)}/>
+                }
             </S.CleanFilterButton>
         </>
     )

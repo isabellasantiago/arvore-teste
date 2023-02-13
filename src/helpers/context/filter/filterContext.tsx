@@ -81,6 +81,8 @@ export const FilterContextProvider = ({children}: ContextProps) => {
             intialFilterValues
         }))
     }
+
+    console.log('check', checkFilters)
     const handleCheckFilter = (value: string, checked: boolean) => {
         console.log('check', value, checked)
         setCheckFilter(
