@@ -23,8 +23,6 @@ export const FilterContext = createContext<FilterContext>({
 export const FilterContextProvider = ({children}: ContextProps) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
 
-    console.log('searchQuery', searchQuery)
-
     const [hasFilter, setHasFilter]= useState<boolean>(false);
 
 

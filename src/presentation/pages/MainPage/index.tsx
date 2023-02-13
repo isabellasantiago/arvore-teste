@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { fetchBooks } from '../../../helpers/fetchBooks';
-import { PagePattern } from '../components';
-import { BookShelves } from '../components/BookShelves';
+import { PagePattern, BookShelves } from '../components';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { MainContainer } from './style';
 

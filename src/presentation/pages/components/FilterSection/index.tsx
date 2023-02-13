@@ -1,9 +1,8 @@
 import React from 'react';
 import {ReactComponent as CloseIcon } from '../../../assets/close.svg';
 import { useWindowSize } from '../../../hooks/useWindowSize';
-import { CheckboxButton } from '../CheckboxButton';
-import { FilterButton } from '../FilterButton';
-import { Footer } from '../Footer';
+import { CheckboxButton, FilterButton, Footer } from '../';
+
 import * as S from './style';
 
 const filterTypes = [

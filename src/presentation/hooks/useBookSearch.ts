@@ -19,7 +19,7 @@ export const useBookSearch = () => {
         return res;
     }, [query]);
 
-    const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery(
+    const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, refetch, isLoading } = useInfiniteQuery(
         'books',
         getBooks,
         {
@@ -39,5 +39,5 @@ export const useBookSearch = () => {
         query && refetch();
     }, [query]);
 
-    return { books: data?.pages, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage};
+    return { books: data?.pages, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage, isLoading};
 }

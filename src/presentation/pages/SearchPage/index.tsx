@@ -1,54 +1,31 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, useCallback, useState } from 'react';
+import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFilter } from '../../../helpers/context';
-import { PagePattern } from '../components';
-import { BookCard } from '../components';
-import { FilterSection } from '../components/FilterSection';
-import { FilterButton } from '../components/FilterButton';
-import { useBookSearch } from '../../hooks/useBookSearch';
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { reduceValue } from '../../../helpers/factory';
+import { BooksModel } from '../../../helpers';
+import {
+    FilterSection,
+    FilterButton,
+    PagePattern,
+    BookCard
+} from '../components';
+import { useBookSearch, useWindowSize } from '../../hooks';
 import * as S from './style';
-import { reduceValue } from '../../../helpers/factory/reduced';
 
-const defaultStyled = {
-    boxSizing: 'border-box',
-    width: '100%',
 
-    display: 'flex',
-    flexFlow: 'row wrap',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    gap: '8px',
-
-    overflowY: 'scroll',
-
-    '::-webkit-scrollbar': {
-        display: 'none',
-    }
+const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
 }
-
 
 export const SearchPage: React.FC = () => {
     const [showFilter, setShowFilter] = useState(false);
     const { width } = useWindowSize();
     const { searchQuery } = useFilter();
-    const { books, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage = true } = useBookSearch();
-
-    const infiniteStyle = width > 700 ? ({
-        ...defaultStyled,
-        height: '100%',
-        gap: '28px',
-        paddingTop: '23px',
-    }) : width > 1600 && ({
-        ...defaultStyled,
-        alignItems: 'flex-start',
-        gap: '18px',
-        paddingTop: '33px',
-    })
-
+    const { books, isSuccess, fetchNextPage, hasNextPage = true, isLoading } = useBookSearch();
 
     const booksItems = books?.flatMap((page) => page?.items);
-    // const conditionBooksItems = !!booksItems ? booksItems.length : 0
     const totalItems = books?.flatMap(page => page?.totalItems);
     const conditionTotalItems = totalItems ?  reduceValue(totalItems, 'totalItems') : 0;
 
@@ -56,6 +33,16 @@ export const SearchPage: React.FC = () => {
         fetchNextPage();
     }, [JSON.stringify(books)]);
 
+    const loader = (
+        <ClipLoader
+            color='#9EAEB7'
+            loading={isLoading}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            cssOverride={override}
+        />
+    )
 
     const mobile = (
             <S.Container
@@ -71,7 +58,6 @@ export const SearchPage: React.FC = () => {
                         buttonType='filter'
                     />
                 </S.ButtonArea>
-                
                     <S.BooksContainer
                         widthSize={width}
                         id="scrollableDiv"
@@ -80,13 +66,13 @@ export const SearchPage: React.FC = () => {
                             dataLength={conditionTotalItems}
                             next={onScrollBottom}
                             hasMore={hasNextPage}
-                            loader={<h4>Loading....</h4>}
+                            loader={loader}
                             endMessage={<p>That's all folks!</p>}
                             scrollableTarget="scrollableDiv"
-                            style={infiniteStyle}
+                            className='infinite-scroll'
                         >
                         {booksItems !== undefined &&
-                            booksItems?.map((book, index) => {
+                            booksItems?.map((book) => {
                                 const { volumeInfo : {
                                     authors,
                                     imageLinks,
@@ -109,12 +95,12 @@ export const SearchPage: React.FC = () => {
                                     </S.BookCardArea>
                         )})}
                         </InfiniteScroll>
-                </S.BooksContainer>
+                    </S.BooksContainer>
                 {showFilter && (
-                        <FilterSection
-                            setShowFilter={setShowFilter}
-                            showFilter={showFilter}
-                        />
+                    <FilterSection
+                    setShowFilter={setShowFilter}
+                    showFilter={showFilter}
+                    />
                 )}
             </S.Container>
     );
@@ -125,6 +111,7 @@ export const SearchPage: React.FC = () => {
         >
             <S.OthersTypeDiv
                 widthSize={width}
+                isFilter
             >
                 <FilterSection
                     setShowFilter={setShowFilter}
@@ -139,29 +126,40 @@ export const SearchPage: React.FC = () => {
                 </S.SearchString>
                     <S.BooksContainer
                         widthSize={width}
+                        id='scrollableDiv'
                     >
-                        {isSuccess &&
-                            booksItems?.map((book, index) => {
-                                const { volumeInfo : {
-                                    authors,
-                                    imageLinks,
-                                    title
-                                }, id} = book;
-                                return(
-                                    <S.BookCardArea
-                                        widthSize={width}
-                                        key={id}
-                                    >
-                                        <BookCard
-                                            imgLink={imageLinks ? imageLinks.thumbnail : ''}
-                                            widthType='tablet'
-                                            hasShadow
-                                            borderRadius='6px 12px 12px 6px'
-                                        />
-                                        <S.TitleOrAuthor type='title'>{title ?? '-'}</S.TitleOrAuthor>
-                                        <S.TitleOrAuthor type='author'>{authors ?? '-'}</S.TitleOrAuthor>
-                                    </S.BookCardArea>
-                        )})}
+                         <InfiniteScroll
+                            dataLength={conditionTotalItems}
+                            next={onScrollBottom}
+                            hasMore={hasNextPage}
+                            loader={loader}
+                            endMessage={<p>That's all folks!</p>}
+                            scrollableTarget="scrollableDiv"
+                            className='infinite-scroll'
+                        >
+                            {isSuccess &&
+                                booksItems?.map((book: BooksModel) => {
+                                    const { volumeInfo : {
+                                        authors,
+                                        imageLinks,
+                                        title
+                                    }, id} = book;
+                                    return(
+                                        <S.BookCardArea
+                                            widthSize={width}
+                                            key={id}
+                                        >
+                                            <BookCard
+                                                imgLink={imageLinks ? imageLinks.thumbnail : ''}
+                                                widthType='tablet'
+                                                hasShadow
+                                                borderRadius='6px 12px 12px 6px'
+                                            />
+                                            <S.TitleOrAuthor type='title'>{title ?? '-'}</S.TitleOrAuthor>
+                                            <S.TitleOrAuthor type='author'>{authors ?? '-'}</S.TitleOrAuthor>
+                                        </S.BookCardArea>
+                            )})}
+                        </InfiniteScroll>
                 </S.BooksContainer>
             </S.OthersTypeDiv>
         </S.Container>
@@ -171,7 +169,7 @@ export const SearchPage: React.FC = () => {
 
     return(
         <PagePattern>
-            {width < 450 ? mobile : others}
+            {isLoading ? loader : width < 450 ? mobile : others}
         </PagePattern>
     )
 }

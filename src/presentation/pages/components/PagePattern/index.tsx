@@ -1,7 +1,6 @@
 import React from 'react';
 import { useWindowSize } from '../../../hooks/useWindowSize';
-import { Footer } from '../Footer';
-import { NavBar } from '../NavBar';
+import { Footer, NavBar } from '../';
 import * as S from './style'
 
 interface PagePatternProps {

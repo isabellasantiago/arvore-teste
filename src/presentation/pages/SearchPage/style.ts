@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import InfiniteScroll from 'react-infinite-scroll-component'
 
 interface TitleProps {
     type: 'title' | 'author';
@@ -29,6 +28,7 @@ export const Container = styled.div<Props>`
         alignItems: 'flex-start',
         padding: '10px',
     })}
+
 `;
 
 export const OthersTypeDiv = styled(Container)<Props>`
@@ -45,7 +45,7 @@ export const OthersTypeDiv = styled(Container)<Props>`
     ${props => props.widthSize > 1600 && css({
         alignItems:'flex-start',
         justifyContent:'flex-start',
-        width:'800px',
+        width: '800px',
     })}
 
     ${props => props.isFilter && css({
@@ -78,32 +78,39 @@ export const ButtonArea = styled.div`
 `;
 
 export const BooksContainer = styled.div<Props>`
-    box-sizing: border-box;
-    width: 100%;
+    &, .infinite-scroll {
+        box-sizing: border-box;
+        width: 100%;
 
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
 
-    overflow-y: scroll;
+        overflow-y: scroll;
 
-    ::-webkit-scrollbar{
-        display: none;
+        ::-webkit-scrollbar{
+            display: none;
+        }
+
+        ${props => props.widthSize > 370  && props.widthSize < 700 && css({
+            justifyContent: 'space-evenly'
+        })}
+
+        ${props => props.widthSize > 700 && props.widthSize < 1600 && css({
+            height: '100%',
+            gap: '0px 25px',
+            paddingTop: '23px',
+        })}
+
+        ${props => props.widthSize > 1600 && css({
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            gap: '18px',
+            paddingTop: '23px',
+        })}
     }
-
-    ${props => props.widthSize > 700 && props.widthSize < 1600 && css({
-        height: '100%',
-        gap: '28px',
-        paddingTop: '23px',
-    })}
-
-    ${props => props.widthSize > 1600 && css({
-        alignItems: 'flex-start',
-        gap: '18px',
-        paddingTop: '33px',
-    })}
 `;
 
 export const BookCardArea = styled.div<Props>`
