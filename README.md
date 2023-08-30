@@ -8,8 +8,8 @@
 
 # Indice
 - [Sobre](#-sobre)
-- [Tecnologias Utilizadas] (#-tecnologias-utilizadas)
-- [Instalação do projeto] (#-instalacao-do-projeto)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Instalação do projeto](#-instalacao-do-projeto)
 
 ## Sobre
 
